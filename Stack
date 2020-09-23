@@ -1,0 +1,58 @@
+#include <iostream>
+using namespace std;
+
+template <class T>
+class Stack {
+private:
+    int size;
+    T *p;
+    int top=0;
+public:
+    Stack(int size) {
+        this->size = size;
+        p = new T[this->size];
+    }
+
+    void push(T item) {
+        if (top == this->size) {
+            cout << "stack is full"<<endl;
+        }
+        else {
+            p[top++] = item;
+        }
+    }
+    T pop() {
+        T t = NULL;
+        if (top == 0)
+            cout << "stack is empty"<<endl;
+        else {
+            t = p[top];
+            p[top--] = NULL;
+        }
+        return t;
+    }
+    void display() {
+        if(top==0)
+            cout << "stack is empty" << endl;
+        for (int i = 0; i <top; i++)
+            cout << p[i] << endl;
+    }
+};
+
+int main()
+{
+    cout << "--------------Stack push and pob operation----------------------\n";
+    Stack<int> stack(5);
+    stack.push(9);
+    stack.push(8);
+    stack.push(7);
+    stack.push(6);
+    stack.push(5);
+    stack.display();
+    stack.pop();
+    stack.pop();
+    stack.pop();
+    stack.pop();
+    stack.pop();
+    stack.display();
+}
