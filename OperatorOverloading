@@ -1,0 +1,67 @@
+#include <iostream>
+#include <fstream>
+#include<vector>
+#include<string>
+
+using namespace std;
+
+class Element {
+private:
+    string name;
+    float price;
+    int qty;
+public:
+    Element() {    }
+    Element(string name, float price, int qty) {
+        this->name = name;
+        this->price = price;
+        this->qty = qty;
+    }
+    friend ifstream& operator>>(ifstream& ifs, Element& element) {
+        ifs >> element.name >> element.price >> element.qty;
+        return ifs;
+    }
+    friend ofstream& operator<<(ofstream& ofs, Element& element) {
+        ofs << element.name << endl << element.price << endl << element.qty << endl;
+        return ofs;
+    }
+    friend ostream& operator<<(ostream& os, Element& element) {
+        os << element.name << endl << element.price << endl << element.qty;
+        return os;
+    }
+};
+
+int main()
+{
+    int n;
+    string name;
+    float price;
+    int qty;
+    cout << "--------------The Program------------------------\n";
+    cout << "Enter number of element:" << endl;
+    cin >> n;
+    vector<Element*> list;
+    cout << "enter all element one by one" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << "Enter " << i + 1 << " Element Name, price, quantity:\n";
+        cin >> name;
+        cin >> price;
+        cin >> qty;
+        list.push_back(new Element(name,price,qty));
+    }
+    ofstream fos("Element.txt");
+    vector<Element*>::iterator iter;
+    for (iter = list.begin(); iter != list.end(); iter++) {
+        fos << **iter;
+    }
+    fos.close();
+
+    Element element;
+    ifstream fis;
+    fis.open("Element.txt");
+    for (int i = 0; i < n; i++) {
+        fis >> element;
+        cout << "Element " <<element<<endl;
+    }
+    fis.close();
+}
